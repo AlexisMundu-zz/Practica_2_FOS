@@ -11,7 +11,6 @@ int main() {
     int parent = getpid();
     int status;
 
-    printf("IMWAITING");
     // init creates 6 child processes that will be replaced by getty processes
     for(i = 0; i < CHILDREN; i++){
         if(getpid() == parent)
@@ -24,10 +23,11 @@ int main() {
     //constantly check that all 6 processes are running and also lookout for shutdown
     while(1) {
         wait(&status);
-        printf("%d", status);
-        if(status==1){ // If shutdown command was typed in the shell, kill all xterm processes and terminate this init process
-       // execlp("killall", "killall", "xterm", NULL);
-        execl("/bin/sh", "/bin/sh", "-c", "kilall --user fsouser", NULL);
+        sleep(3);
+        //printf("%d", status);
+        if(1){ // If shutdown command was typed in the shell, kill all xterm processes and terminate this init process
+            execlp("killall", "killall", "xterm", NULL);
+        //execl("/bin/sh", "/bin/sh", "-c", "kilall --user fsouser", NULL);
         exit(1);
         }
         

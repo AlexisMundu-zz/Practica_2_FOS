@@ -51,7 +51,8 @@ int main(){
 				}
 				else{ //user left shell with shutdown command 
 					//WE NEED TO LET INIT KNOW BUT HOW??
-					printf("SHUTDOWN TYPED");
+					//printf("SHUTDOWN TYPED GETTY");
+					//sleep(4);
 					exit(1); // Sends shutdown state to init
 				}
 			}

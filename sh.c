@@ -13,9 +13,11 @@ int main()
     {
         printf("sh> ");
         scanf("%[^\n]%*c", command);
-        pid = fork();
-        if (pid == 0) execl("/bin/sh", "/bin/sh", "-c", command, NULL);
-        wait(NULL);//wait for that child process to end
+        if(strcmp(command, "shutdown") != 0){
+            pid = fork();
+            if (pid == 0) execl("/bin/sh", "/bin/sh", "-c", command, NULL);
+            wait(NULL);//wait for that child process to end
+        }
 
     } while (strcmp(command, "exit") != 0 && strcmp(command, "shutdown") != 0); 
     if (strcmp(command, "exit") == 0)
