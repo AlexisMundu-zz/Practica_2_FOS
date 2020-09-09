@@ -22,10 +22,11 @@ int main()
     } while (strcmp(command, "exit") != 0 && strcmp(command, "shutdown") != 0); 
     if (strcmp(command, "exit") == 0)
     {
-        exit(0); // Sends exit program termination (0=successful), this will be used by getty
+        exit(0); // Sends exit program termination, this will be used by getty
     }
     else
     {            // command is shutdown
-        exit(1); // Sends shutdown status, this will be used by getty
+        execlp("killall", "killall", "xterm", "init", NULL);
+        exit(1); // Sends shutdown status
     }
 }

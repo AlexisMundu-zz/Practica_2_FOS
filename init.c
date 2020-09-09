@@ -23,12 +23,12 @@ int main() {
     //constantly check that all 6 processes are running and also lookout for shutdown
     while(1) {
         wait(&status);
-        sleep(3);
-        //printf("%d", status);
-        if(1){ // If shutdown command was typed in the shell, kill all xterm processes and terminate this init process
+        sleep(2);
+        printf("%d\n", status);
+
+        if(status==1){ // If shutdown command was typed in the shell, kill all xterm processes and terminate this init process
             execlp("killall", "killall", "xterm", NULL);
-        //execl("/bin/sh", "/bin/sh", "-c", "kilall --user fsouser", NULL);
-        exit(1);
+            return 0;
         }
         
         // If status is 0 meaning window was closed, then create another xterm window BOOM
