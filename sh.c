@@ -15,18 +15,16 @@ int main()
         scanf("%[^\n]%*c", command);
         if(strcmp(command, "shutdown") != 0){
             pid = fork();
-            if (pid == 0) execl("/bin/sh", "/bin/sh", "-c", command, NULL);
+            if (pid == 0) 
+                execl("/bin/sh", "/bin/sh", "-c", command, NULL);
             wait(NULL);//wait for that child process to end
         }
 
-    } while (strcmp(command, "exit") != 0 && strcmp(command, "shutdown") != 0); 
+    }while (strcmp(command, "exit") != 0 && strcmp(command, "shutdown") != 0); 
+    
     if (strcmp(command, "exit") == 0)
-    {
-        exit(0); // Sends exit program termination, this will be used by getty
-    }
-    else
-    {            // command is shutdown
-        execlp("killall", "killall", "xterm", "init", NULL);
-        exit(1); // Sends shutdown status
-    }
+        exit(0); 
+    else    // command is shutdown
+        execlp("killall", "killall", "xterm", "init", NULL); //kill absolutely all processes (init, getty and sh processes)
+
 }

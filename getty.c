@@ -4,7 +4,7 @@
 #include <string.h>
 #include <sys/wait.h>
 
-//returns 1 if user and password match, 0 if they do not
+//returns 1 if user and password match those in file, 0 if they do not
 int validate(char *user,char *pass){
 	FILE *fp;
     char buff[255];
@@ -35,8 +35,8 @@ int main(){
 	char user[50];
 	char pwd[50];
 	int pid;
-	int status;
 	askForCredentials(user,pwd);
+	
 	while(1){
 		if(validate(user,pwd) == 1){
 			//getty creates 1 child process that will be replaced by a shell session
@@ -45,22 +45,16 @@ int main(){
 				execlp("./sh","sh",NULL);
 				exit(0);
 			}else{
-				wait(&status);//pickup exit status of sh
-				if(status == 0){//user left shell with exit command, now ask for credentials again
-					askForCredentials(user,pwd);
-				}
-				else{ //user left shell with shutdown command 
-					//WE NEED TO LET INIT KNOW BUT HOW??
-					//printf("SHUTDOWN TYPED GETTY");
-					//sleep(4);
-					exit(1); // Sends shutdown state to init
-				}
+				//parent process
+				wait(NULL);
+				//if user left shell with the exit command, ask for credentials again
+				askForCredentials(user,pwd);
+	
 			}
 		}else{
 			printf("Wrong credentials bro\n");
 			askForCredentials(user,pwd);
 		}
 	}
-	exit(0);
 }
 
